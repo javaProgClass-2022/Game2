@@ -1,2 +1,2 @@
-# Game1
-Kunala, Hetul, Lucas
+# Game2
+Rachel, Jane, Iurii
