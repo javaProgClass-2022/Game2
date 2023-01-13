@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,6 +39,8 @@ public class MainGame {
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
+	final static int PFW = PANW*3;
+	final static int PFH = PANH*3;
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
@@ -47,7 +50,8 @@ public class MainGame {
 	int time;
 	
 	/**** ArrayLists ****/
-	ArrayList<Enemy> entities = new ArrayList<Enemy>();
+	//stores player, enemies, obstacles and eventually, powerups
+	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	
 	//constructor
@@ -58,10 +62,18 @@ public class MainGame {
 	}
 	void setupObjects() {
 		p = new Player();
+		entities.add(p);
+		setupObstacles();
+	}
+	void setupObstacles() {
+		int n = 10; //number of obstacles to create
+		for(int i=0;i<n;i++) {
+			entities.add(new Obstacle());
+		}
 	}
 	
 	void createAndShowGUI() {
-		JFrame frame = new JFrame("Awesome game!");
+		JFrame frame = new JFrame("Murder in the Mesosoic");
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
 		
@@ -92,22 +104,22 @@ public class MainGame {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			//draw all the entities
-			g2.drawRect(CX,CY,p.width,p.height);//player temp
 			for(int i = 0;i<entities.size();i++) {//does camera calculations and displays each entity
+				//TODO make camera a method?
 				int vx = entities.get(i).x-p.x+CX;
 				int vy = entities.get(i).y-p.y+CY;
 				if(vx<PANW&&vx>0&&vy>0&&vy<PANH) {
-					g2.drawRect(vx, vy, 5, 5);
+					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
-			
-		}
+		}	
 	}
+	
 	class TL1 implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
-			if(time%spawnTime==0) {
+			if(time%spawnTime==0) {//every few seconds spawns an enemy
 				entities.add(new Enemy());
 			}
 			p.move();
