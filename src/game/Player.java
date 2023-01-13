@@ -3,12 +3,7 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-<<<<<<< Updated upstream
-public class Player {
-	int height=5, width=5;
-	int x = 400, y=500;
-	double speed = 5;
-=======
+
 public class Player extends Entity {
 	int playerHealth = 100;
 	double speed = 5;
@@ -18,11 +13,7 @@ public class Player extends Entity {
 		x = 400; 
 		y=500;
 	}
->>>>>>> Stashed changes
 	
-	Player (){
-		
-	}
 	void move(){
 		if(MainGame.bKeyl.up) {
 			y-=speed;
@@ -36,10 +27,6 @@ public class Player extends Entity {
 		if(MainGame.bKeyl.right) {
 			x+=speed;
 		}
-<<<<<<< Updated upstream
-	}
-	
-=======
 		if(super.Collide()) {//if it collides after moving, don't allow movement
 			playerHealth -= 1;
 //			System.out.println(playerHealth);//test
@@ -47,5 +34,4 @@ public class Player extends Entity {
 			x = x1;
 		}
 	}	
->>>>>>> Stashed changes
-}
+ß}
