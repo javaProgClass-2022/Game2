@@ -14,7 +14,9 @@ public class Player extends Entity {
 		y=500;
 	}
 	
-	void move(){
+	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
+		int y1 = y;
+		int x1 = x;
 		if(MainGame.bKeyl.up) {
 			y-=speed;
 		}
@@ -34,4 +36,4 @@ public class Player extends Entity {
 			x = x1;
 		}
 	}	
-ß}
+}
