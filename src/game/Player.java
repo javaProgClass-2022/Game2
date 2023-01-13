@@ -8,10 +8,7 @@ public class Player {
 	int x = 400, y=500;
 	double speed = 5;
 	
-	Player (){
-		
-	}
-	void move(){
+	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
 		if(MainGame.bKeyl.up) {
 			y-=speed;
 		}
@@ -24,6 +21,5 @@ public class Player {
 		if(MainGame.bKeyl.right) {
 			x+=speed;
 		}
-	}
-	
+	}	
 }
