@@ -27,7 +27,7 @@ public class Player extends Entity {
 		if(MainGame.bKeyl.right) {
 			x+=speed;
 		}
-		if(super.Collide()) {//if it collides after moving, don't allow movement
+		if(super.collide()) {//if it collides after moving, don't allow movement
 			y = y1;
 			x = x1;
 		}
