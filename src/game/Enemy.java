@@ -1,6 +1,7 @@
 package game;
 
 public class Enemy extends Entity{
+	int health =100;
 	int hp = 10;
 	Enemy(){
 		//spawns at random coordinates for testing purposes 
