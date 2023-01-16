@@ -12,11 +12,11 @@ public class BetterKeyListener implements KeyListener{
 		
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// not being used? Yet
 			
 		}
 		@Override
-		public void keyPressed(KeyEvent e) {
+		public void keyPressed(KeyEvent e) {//when arrow keys are pressed, sets the corresponding variables to true
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=true;
 			}
@@ -32,8 +32,7 @@ public class BetterKeyListener implements KeyListener{
 			
 		}
 		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+		public void keyReleased(KeyEvent e) {//when arrow keys are released, sets corresponding variables back to false
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=false;
 			}
