@@ -3,13 +3,13 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-
 public class Player extends Entity {
-	int playerHealth = 100;
+	int health = 100;
 	double speed = 5;
+	boolean iframe = false;
 	Player(){
-		height=20;
-		width=20;
+		height=5;
+		width=5;
 		x = 400; 
 		y=500;
 	}
@@ -29,11 +29,10 @@ public class Player extends Entity {
 		if(MainGame.bKeyl.right) {
 			x+=speed;
 		}
-		if(super.Collide()) {//if it collides after moving, don't allow movement
-			playerHealth -= 1;
-//			System.out.println(playerHealth);//test
+		if(super.collide()) {//if it collides after moving, don't allow movement
 			y = y1;
 			x = x1;
 		}
+		iframe=false;
 	}	
 }
