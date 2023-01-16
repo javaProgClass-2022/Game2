@@ -44,7 +44,7 @@ public class MainGame {
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
-	static Player p;
+	Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int spawnTime = 100;
 	int time;

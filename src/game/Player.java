@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 public class Player extends Entity {
 	int health = 100;
 	double speed = 5;
-	boolean iframe = false;
 	Player(){
 		height=5;
 		width=5;
@@ -31,10 +30,9 @@ public class Player extends Entity {
 		}
 		if(super.collide()) {//if it collides after moving, don't allow movement
 			health -= 1;
+
 			y = y1;
 			x = x1;
 		}
-		iframe=false;
-		System.out.println(health);
 	}	
 }
