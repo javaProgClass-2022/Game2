@@ -38,10 +38,18 @@ public class Entity extends Rectangle{
 		y= (int) (v*aspeed*Math.sin(angle))+y;
 		if(collide()) {
 			y=y1;
+			if(!MainGame.p.iframe) {
+				MainGame.p.iframe=true;
+				MainGame.p.health-=1;
+			}
 		}
 		x= (int) (h*aspeed*Math.cos(angle))+x;
 		if(collide()) {
 			x=x1;
+			if(!MainGame.p.iframe) {
+				MainGame.p.iframe=true;
+				MainGame.p.health-=1;
+			}
 		}
 		//if vertical. NaN != NaN and angle is NaN if line is vertical
 		if(angle!=angle) {
