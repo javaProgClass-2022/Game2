@@ -9,8 +9,8 @@ public class Player extends Entity {
 	Player(){
 		height=5;
 		width=5;
-		x = 400; 
-		y=500;
+		x = 450; 
+		y = 400;
 	}
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals

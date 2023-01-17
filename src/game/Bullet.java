@@ -19,7 +19,7 @@ public class Bullet {
         this.dirX = (int)((vx / distance) * speed);
         this.dirY = (int)((vy / distance) * speed);
         
-//        System.out.println(vx);
+//      System.out.println(vx);
 //		System.out.println(vy);
 //		System.out.println(distance);
 //		System.out.println();

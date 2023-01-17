@@ -120,9 +120,13 @@ public class MainGame {
 					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
-			
+			//draw all the bullets
 			for(Bullet bullet: bullets) {
-				g2.fillRect(bullet.startX, bullet.startY, bullet.width, bullet.height);
+				int vx = bullet.startX-p.x+CX;
+				int vy = bullet.startY-p.y+CY;
+				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					g2.fillRect(vx, vy, bullet.width, bullet.height);
+				}
 			}
 		}	
 	}
@@ -132,7 +136,7 @@ public class MainGame {
 		public void actionPerformed(ActionEvent e) {
 			time++;
 			if(time % spawnTime == 0) {//every few seconds spawns an enemy
-				entities.add(new Enemy());
+				//entities.add(new Enemy());
 			}
 			
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
@@ -165,10 +169,14 @@ public class MainGame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			int x = e.getX();
-			int y = e.getY();
+			int vx = e.getX();
+			int vy = e.getY();
+		
+			int x = p.x+vx-CX;
+			int y = p.y+vy-CY;
 			
-			bullets.add(new Bullet(CX, CY, x, y));
+			bullets.add(new Bullet(p.x, p.y, x, y));
+			
 
 		}
 		@Override
