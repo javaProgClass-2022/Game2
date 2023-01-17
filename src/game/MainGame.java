@@ -49,6 +49,7 @@ public class MainGame {
 	int enemySpawnTime = 100;
 	int hpSpawnTime = 5000;
 	int time;
+	int levelDelay=10000; //how long between levels
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
@@ -124,6 +125,9 @@ public class MainGame {
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
 				}
+			}
+			if(time%levelDelay==0&&enemySpawnTime>2) {
+				enemySpawnTime=enemySpawnTime/2;
 			}
 			Spawn();
 			p.move();
