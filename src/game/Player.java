@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Entity {
-	int health = 100;
+	static int health = 100;
 	double speed = 5;
 	boolean iframe = false;
 	Player(){

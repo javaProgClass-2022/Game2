@@ -111,6 +111,13 @@ public class MainGame {
 				int vy = entities.get(i).y-p.y+CY;
 				if(vx<PANW&&vx>0&&vy>0&&vy<PANH) {
 					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					if (entities.get(i)==p) {
+						g2.setColor(Color.BLACK);
+						g2.fillRect(vx-50, vy+12 ,  100, 10);
+						g2.setColor(Color.GREEN);
+						g2.fillRect(vx-50, vy+12, Player.health, 10);
+						
+					}
 				}
 			}
 		}	
