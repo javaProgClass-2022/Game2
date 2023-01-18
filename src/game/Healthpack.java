@@ -1,15 +1,13 @@
 package game;
 
-public class Enemy extends Entity{
-
-	Enemy(){
+public class Healthpack extends Powerup{
+	Healthpack(){
 		//spawns at random coordinates for testing purposes 
 		x = (int) (MainGame.PANW*Math.random());
 		y = (int) (MainGame.PANH*Math.random());
-		width = 10;
-		height = 10;
-		health = 10;
-		aspeed = 5;
+		width = 20;
+		height = 20;
+		aspeed=10;
+		damage = -20;
 	}
 }
-

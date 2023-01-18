@@ -48,7 +48,7 @@ public class MainGame {
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
-	Player p;
+	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int spawnTime = 100;
 	int time;
@@ -56,10 +56,7 @@ public class MainGame {
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
-	
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	
-	
 	//constructor
 	MainGame() {
 		createAndShowGUI();
@@ -138,13 +135,11 @@ public class MainGame {
 			if(time % spawnTime == 0) {//every few seconds spawns an enemy
 				entities.add(new Enemy());
 			}
-			
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
 				}
 			}
-			
 			for(int i=bullets.size()-1;i>-1;i--) {
 				bullets.get(i).move();
 			}
