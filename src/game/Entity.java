@@ -3,16 +3,21 @@ package game;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
-	
-	int aspeed;//autospeed. 
+	int damage;//damage on touch
+	int aspeed;//autospeed. For automatic movement
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
 			if(MainGame.entities.get(i)!=this) {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
+				//intersection is empty if doesn't intersect. Other values irrelevant.
 				if (!intersection.isEmpty()) {
 					c = true;
-					i = 100000;//exit the for loop
+					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
+						MainGame.p.health-=damage;
+						MainGame.p.iframe = true;
+					}
+					break;
 				}
 			}
 		}

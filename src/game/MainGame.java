@@ -44,10 +44,12 @@ public class MainGame {
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
-	Player p;
+	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
-	int spawnTime = 100;
+	int enemySpawnTime = 100;
+	int hpSpawnTime = 5000;
 	int time;
+	int levelDelay=10000; //how long between levels
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
@@ -119,16 +121,27 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
-			if(time%spawnTime==0) {//every few seconds spawns an enemy
-				entities.add(new Enemy());
-			}
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
 				}
 			}
+			if(time%levelDelay==0&&enemySpawnTime>2) {
+				enemySpawnTime=enemySpawnTime/2;
+			}
+			Spawn();
 			p.move();
 			drPanel.repaint();
+		}
+	}
+	void Spawn() {
+		//Enemy
+		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
+			entities.add(new Enemy());
+		}
+		//healthpack
+		if(time%hpSpawnTime==0) {
+			entities.add(new Healthpack());
 		}
 	}
 }
