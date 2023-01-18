@@ -19,7 +19,7 @@ public class Bullet extends Rectangle{
         this.dirX = ((vx / distance) * speed);
         this.dirY = ((vy / distance) * speed);
         
-    	width = 2; height = 2;
+    	width = 4; height = 4;
     	damage = 10;
 	}
 	

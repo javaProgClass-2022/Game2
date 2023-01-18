@@ -117,7 +117,16 @@ public class MainGame {
 				int vy = entities.get(i).y-p.y+CY;
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
 					
-					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					if (entities.get(i) instanceof Enemy) {
+						g2.setColor(new Color(34, 180, 54));
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					} else if (entities.get(i) instanceof Obstacle) {
+						g2.setColor(Color.blue);
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					} else {
+						g2.setColor(Color.black);
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					}
 				}
 			}
 			//draw all the bullets
@@ -202,7 +211,4 @@ public class MainGame {
 		
 	}
 }
-
-
-
 
