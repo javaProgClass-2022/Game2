@@ -3,7 +3,9 @@ package game;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
-	int damage;//damage on touch
+
+	int damage;
+	int health;
 	int aspeed;//autospeed. 
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
@@ -12,11 +14,7 @@ public class Entity extends Rectangle{
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
-						MainGame.p.health-=damage;
-						MainGame.p.iframe = true;
-					}
-					i = 100000;//exit the for loop
+					break;
 				}
 			}
 		}
@@ -75,3 +73,4 @@ public class Entity extends Rectangle{
 		}*/
 	}
 }
+

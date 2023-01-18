@@ -30,9 +30,10 @@ public class Player extends Entity {
 			x+=speed;
 		}
 		if(super.collide()) {//if it collides after moving, don't allow movement
+			health -= 1;
+
 			y = y1;
 			x = x1;
 		}
-		iframe=false;
 	}	
 }

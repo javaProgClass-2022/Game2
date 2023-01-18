@@ -15,12 +15,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+//////////////////////////////
+import javax.swing.event.MouseInputListener;
 
 
 
@@ -39,22 +43,20 @@ public class MainGame {
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
-	final static int PFW = PANW*3;
-	final static int PFH = PANH*3;
+	final static int PFW = PANW*3; // the frame for 
+	final static int PFH = PANH*3; //               spawning obstacles
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
 	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
-	int enemySpawnTime = 100;
-	int hpSpawnTime = 5000;
+	int spawnTime = 100;
 	int time;
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
-	
-	
+	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	//constructor
 	MainGame() {
 		createAndShowGUI();
@@ -97,6 +99,7 @@ public class MainGame {
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
+			this.addMouseListener(new BulletCoordinates());
 		}
 		
 		@Override
@@ -105,19 +108,21 @@ public class MainGame {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			//draw all the entities
-			for(int i = 0;i<entities.size();i++) {//does camera calculations and displays each entity
+			for(int i = 0; i < entities.size(); i++) {//does camera calculations and displays each entity
 				//TODO make camera a method?
 				int vx = entities.get(i).x-p.x+CX;
 				int vy = entities.get(i).y-p.y+CY;
-				if(vx<PANW&&vx>0&&vy>0&&vy<PANH) {
+				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					
 					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
-					if (entities.get(i)==p) {
-						g2.setColor(Color.BLACK);
-						g2.fillRect(vx-50, vy+12 ,  100, 10);
-						g2.setColor(Color.GREEN);
-						g2.fillRect(vx-50, vy+12, Player.health, 10);
-						
-					}
+				}
+			}
+			//draw all the bullets
+			for(Bullet bullet: bullets) {
+				int vx = (int) (bullet.x-p.x+CX);
+				int vy = (int) (bullet.y-p.y+CY);
+				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
 			}
 		}	
@@ -127,25 +132,72 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
+			if(time % spawnTime == 0) {//every few seconds spawns an enemy
+				entities.add(new Enemy());
+			}
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
 				}
 			}
-			Spawn();
+			for(int i=bullets.size()-1;i>-1;i--) {
+				bullets.get(i).move();
+			}
+			
 			p.move();
+			
 			drPanel.repaint();
 		}
 	}
-	void Spawn() {
-		//Enemy
-		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
-			entities.add(new Enemy());
+	
+	class BulletCoordinates implements MouseInputListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
 		}
-		//healthpack
-		if(time%hpSpawnTime==0) {
-			entities.add(new Healthpack());
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int vx = e.getX();
+			int vy = e.getY();
+		
+			int x = p.x+vx-CX;
+			int y = p.y+vy-CY;
+			
+			bullets.add(new Bullet(p.x, p.y, x, y));
+			
+
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+		
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }
+
+
+
 
