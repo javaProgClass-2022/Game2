@@ -122,8 +122,8 @@ public class MainGame {
 			}
 			//draw all the bullets
 			for(Bullet bullet: bullets) {
-				int vx = bullet.startX-p.x+CX;
-				int vy = bullet.startY-p.y+CY;
+				int vx = (int) (bullet.x-p.x+CX);
+				int vy = (int) (bullet.y-p.y+CY);
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
 					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
@@ -136,7 +136,7 @@ public class MainGame {
 		public void actionPerformed(ActionEvent e) {
 			time++;
 			if(time % spawnTime == 0) {//every few seconds spawns an enemy
-				//entities.add(new Enemy());
+				entities.add(new Enemy());
 			}
 			
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
@@ -145,8 +145,8 @@ public class MainGame {
 				}
 			}
 			
-			for(Bullet bullet: bullets) {
-				bullet.move();
+			for(int i=bullets.size()-1;i>-1;i--) {
+				bullets.get(i).move();
 			}
 			
 			p.move();

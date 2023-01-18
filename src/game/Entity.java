@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
 	int damage;
+	int health;
 	int aspeed;//autospeed. 
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
@@ -12,7 +13,7 @@ public class Entity extends Rectangle{
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-					i = 100000;//exit the for loop
+					break;
 				}
 			}
 		}
