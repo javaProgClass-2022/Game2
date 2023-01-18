@@ -12,4 +12,3 @@ public class Enemy extends Entity{
 		aspeed = 5;
 	}
 }
-

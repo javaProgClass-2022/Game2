@@ -3,7 +3,6 @@ package game;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
-
 	int damage;
 	int health;
 	int aspeed;//autospeed. 
@@ -73,4 +72,3 @@ public class Entity extends Rectangle{
 		}*/
 	}
 }
-
