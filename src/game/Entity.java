@@ -3,9 +3,8 @@ package game;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
-	int damage;
-	int health;
-	int aspeed;//autospeed. 
+	int damage;//damage on touch
+	int aspeed;//autospeed. For automatic movement
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
