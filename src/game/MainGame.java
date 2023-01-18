@@ -134,6 +134,7 @@ public class MainGame {
 				int vx = (int) (bullet.x-p.x+CX);
 				int vy = (int) (bullet.y-p.y+CY);
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					g2.setColor(Color.black);
 					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
 			}
