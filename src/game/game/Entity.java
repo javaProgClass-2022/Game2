@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 public class Entity extends Rectangle{
 	int damage;//damage on touch
 	int aspeed;//autospeed. For automatic movement
+	int health;
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
@@ -14,13 +15,9 @@ public class Entity extends Rectangle{
 				if (!intersection.isEmpty()) {
 					c = true;
 					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
-<<<<<<< Updated upstream
-						MainGame.p.health-=damage;
-						MainGame.p.iframe = true;
-=======
+
 						MainGame.p.iframe = true;
 						Player.health-=damage;
->>>>>>> Stashed changes
 					}
 					break;
 				}

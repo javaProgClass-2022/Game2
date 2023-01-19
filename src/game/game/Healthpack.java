@@ -8,6 +8,7 @@ public class Healthpack extends Powerup{
 		width = 20;
 		height = 20;
 		aspeed = 10;
+		health = 100;
 		damage = -20;
 	}
 }

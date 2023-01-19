@@ -15,16 +15,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-<<<<<<< Updated upstream
-=======
 import javax.swing.event.MouseInputListener;
->>>>>>> Stashed changes
 
 
 
@@ -51,18 +49,14 @@ public class MainGame {
 	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int enemySpawnTime = 100;
-	int hpSpawnTime = 5000;
+	int hpSpawnTime = 50;
 	int time;
 	int levelDelay=10000; //how long between levels
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
-<<<<<<< Updated upstream
-	
-=======
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
->>>>>>> Stashed changes
 	
 	//constructor
 	MainGame() {
@@ -86,7 +80,6 @@ public class MainGame {
 		JFrame frame = new JFrame("Murder in the Mesosoic");
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
-		
 
 		frame.add(drPanel);
 		frame.pack();
@@ -123,6 +116,14 @@ public class MainGame {
 					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
+			for(Bullet bullet: bullets) {
+				int vx = (int) (bullet.x-p.x+CX);
+				int vy = (int) (bullet.y-p.y+CY);
+				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					g2.fillRect(vx, vy, bullet.width, bullet.height);
+				}
+			}
+
 		}	
 	}
 	
@@ -130,10 +131,6 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
-<<<<<<< Updated upstream
-=======
-			System.out.println("yep");
->>>>>>> Stashed changes
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
@@ -142,31 +139,16 @@ public class MainGame {
 			if(time%levelDelay==0&&enemySpawnTime>2) {
 				enemySpawnTime=enemySpawnTime/2;
 			}
-<<<<<<< Updated upstream
-=======
-			if(time%levelDelay==0&&enemySpawnTime>2) {
-				//	enemySpawnTime=enemySpawnTime/2;
-				}
->>>>>>> Stashed changes
+
+			for(int i=bullets.size()-1;i>=0;i--) {//move all the enemies. Don't move obstacles
+				bullets.get(i).move();
+			}
 			Spawn();
 			p.move();
 			drPanel.repaint();
 		}
 	}
-<<<<<<< Updated upstream
-	void Spawn() {
-		//Enemy
-		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
-			entities.add(new Enemy());
-		}
-		//healthpack
-		if(time%hpSpawnTime==0) {
-			entities.add(new Healthpack());
-		}
-	}
-}
 
-=======
 	class BulletCoordinates implements MouseInputListener {
 
 		@Override
@@ -181,13 +163,13 @@ public class MainGame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			int vxx = e.getX();
-			int vyy = e.getY();
+			int vx = e.getX();
+			int vy = e.getY();
 
-			int xx = p.x+vxx-CX;
-			int yy = p.y+vyy-CY;
+			int x = p.x+vx-CX;
+			int y = p.y+vy-CY;
 
-			bullets.add(new Bullet(p.x, p.y, xx, yy));
+			bullets.add(new Bullet(p.x, p.y, x, y));
 
 		}
 		@Override
@@ -221,4 +203,3 @@ public class MainGame {
 		}
 	}
 }
->>>>>>> Stashed changes

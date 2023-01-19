@@ -4,15 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Entity {
-<<<<<<< Updated upstream
-	int health = 100;
-	double speed = 5;
-	boolean iframe = false;
-=======
 	static int health = 100;
 	static double speed = 5;
 	static boolean iframe = false;
->>>>>>> Stashed changes
 	Player(){
 		height=5;
 		width=5;
@@ -37,17 +31,10 @@ public class Player extends Entity {
 			x+=speed;
 		}
 		if(super.collide()) {//if it collides after moving, don't allow movement
-<<<<<<< Updated upstream
-			y = y1;
-			x = x1;
-		}
-		iframe=false;
-=======
 
 			y = y1;
 			x = x1;
 		}
 		iframe = false;
->>>>>>> Stashed changes
 	}	
 }
