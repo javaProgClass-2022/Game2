@@ -14,8 +14,13 @@ public class Entity extends Rectangle{
 				if (!intersection.isEmpty()) {
 					c = true;
 					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
+<<<<<<< Updated upstream
 						MainGame.p.health-=damage;
 						MainGame.p.iframe = true;
+=======
+						MainGame.p.iframe = true;
+						Player.health-=damage;
+>>>>>>> Stashed changes
 					}
 					break;
 				}

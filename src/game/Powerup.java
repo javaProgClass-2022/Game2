@@ -22,11 +22,11 @@ public class Powerup extends Enemy {
 		
 		double angle = Math.abs(Math.atan(deltaY/deltaX));
 
-		//move. If it collides, don't move in that direction
-		y= (int) (v*aspeed*Math.sin(angle))+y;
-		x= (int) (h*aspeed*Math.cos(angle))+x;
+		y = (int) (v*aspeed*Math.sin(angle))+y;
+		x = (int) (h*aspeed*Math.cos(angle))+x;
 
 		collide();
+		
 		x=x1;
 		y=y1;
 	}
@@ -40,12 +40,12 @@ public class Powerup extends Enemy {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
-						MainGame.p.health-=damage;
-						MainGame.p.iframe=true;
+					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
+						Player.health-=damage;
+						Player.iframe=true;
 						MainGame.entities.remove(this);
 					}
-					i = 100000;//exit the for loop
+					break;
 				}
 			}
 		}

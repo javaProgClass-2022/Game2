@@ -21,6 +21,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+<<<<<<< Updated upstream
+=======
+import javax.swing.event.MouseInputListener;
+>>>>>>> Stashed changes
 
 
 
@@ -54,7 +58,11 @@ public class MainGame {
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
+<<<<<<< Updated upstream
 	
+=======
+	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+>>>>>>> Stashed changes
 	
 	//constructor
 	MainGame() {
@@ -96,6 +104,7 @@ public class MainGame {
 		DrawingPanel() {
 			this.setBackground(Color.LIGHT_GRAY);
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
+			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 		}
@@ -121,6 +130,10 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
+<<<<<<< Updated upstream
+=======
+			System.out.println("yep");
+>>>>>>> Stashed changes
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i).aspeed!=0) {
 					entities.get(i).move(p);
@@ -129,11 +142,18 @@ public class MainGame {
 			if(time%levelDelay==0&&enemySpawnTime>2) {
 				enemySpawnTime=enemySpawnTime/2;
 			}
+<<<<<<< Updated upstream
+=======
+			if(time%levelDelay==0&&enemySpawnTime>2) {
+				//	enemySpawnTime=enemySpawnTime/2;
+				}
+>>>>>>> Stashed changes
 			Spawn();
 			p.move();
 			drPanel.repaint();
 		}
 	}
+<<<<<<< Updated upstream
 	void Spawn() {
 		//Enemy
 		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
@@ -146,3 +166,59 @@ public class MainGame {
 	}
 }
 
+=======
+	class BulletCoordinates implements MouseInputListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int vxx = e.getX();
+			int vyy = e.getY();
+
+			int xx = p.x+vxx-CX;
+			int yy = p.y+vyy-CY;
+
+			bullets.add(new Bullet(p.x, p.y, xx, yy));
+
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}	
+	void Spawn() {
+		//Enemy
+		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
+			entities.add(new Enemy());
+		}
+		//healthpack
+		if(time%hpSpawnTime==0) {
+			entities.add(new Healthpack());
+		}
+	}
+}
+>>>>>>> Stashed changes

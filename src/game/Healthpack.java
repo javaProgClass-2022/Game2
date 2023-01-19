@@ -7,7 +7,7 @@ public class Healthpack extends Powerup{
 		y = (int) (MainGame.PANH*Math.random());
 		width = 20;
 		height = 20;
-		aspeed=10;
+		aspeed = 10;
 		damage = -20;
 	}
 }
