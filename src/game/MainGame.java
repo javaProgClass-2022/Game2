@@ -46,12 +46,16 @@ public class MainGame {
 	final static int PFW = PANW*3; // the frame for 
 	final static int PFH = PANH*3; //               spawning obstacles
 	
+	// quantity of bullets in a magazine
+	static int magazine = 10;
+	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
 	Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int spawnTime = 100;
 	int time;
+	
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
@@ -72,7 +76,7 @@ public class MainGame {
 		setupObstacles();
 	}
 	void setupObstacles() {
-		int n = 10; //number of obstacles to create
+		int n = 50; //number of obstacles to create
 		for(int i=0;i<n;i++) {
 			entities.add(new Obstacle());
 		}
@@ -103,6 +107,7 @@ public class MainGame {
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 			this.addMouseListener(new BulletCoordinates());
+			this.setBackground(new Color(155, 143, 129));
 		}
 		
 		@Override
@@ -118,7 +123,7 @@ public class MainGame {
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
 					
 					if (entities.get(i) instanceof Enemy) {
-						g2.setColor(new Color(34, 180, 54));
+						g2.setColor(new Color(28, 124, 25));
 						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 					} else if (entities.get(i) instanceof Obstacle) {
 						g2.setColor(Color.blue);
@@ -179,14 +184,36 @@ public class MainGame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			int vx = e.getX();
-			int vy = e.getY();
-		
-			int x = p.x+vx-CX;
-			int y = p.y+vy-CY;
+			if (magazine != 0) {
+				int vx = e.getX();
+				int vy = e.getY();
 			
-			bullets.add(new Bullet(p.x, p.y, x, y));
-			
+				int x = p.x+vx-CX;
+				int y = p.y+vy-CY;
+				
+				switch(p.gun) {
+				case shotgun: 
+					bullets.add(new Shotgun(p.x, p.y, x, y + 30));
+					bullets.add(new Shotgun(p.x, p.y, x + 30, y));
+					bullets.add(new Shotgun(p.x, p.y, x - 30, y));
+					bullets.add(new Shotgun(p.x, p.y, x, y - 30));
+				break;
+				
+				case assaultRifle:
+					bullets.add(new AssaultRifle(p.x, p.y, x, y));
+					
+				break;
+				
+				case sniperRifle: 
+					bullets.add(new SniperRifle(p.x, p.y, x, y));
+				break;
+				
+				default: 
+					bullets.add(new Pistol(p.x, p.y, x, y));
+				}
+				
+				magazine -= 1;
+			}
 
 		}
 		@Override

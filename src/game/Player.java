@@ -6,11 +6,16 @@ import java.awt.Graphics2D;
 public class Player extends Entity {
 	int health = 100;
 	double speed = 5;
+	
+	Gun gun;
+	
 	Player(){
-		height=5;
-		width=5;
+		height= 10;
+		width= 10;
 		x = 450; 
 		y = 400;
+		
+		gun = Gun.sniperRifle;
 	}
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals

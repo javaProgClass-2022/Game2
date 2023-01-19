@@ -8,6 +8,7 @@ public class Obstacle extends Entity{
 		height = (int) (100*Math.random()+5);
 		aspeed=0;
 	}
+	
 	Obstacle(int x, int y, int width, int height){
 		this.x = x;
 		this.y = y;

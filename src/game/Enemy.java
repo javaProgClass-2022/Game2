@@ -6,8 +6,9 @@ public class Enemy extends Entity{
 		//spawns at random coordinates for testing purposes 
 		x = (int) (MainGame.PANW*Math.random());
 		y = (int) (MainGame.PANH*Math.random());
-		width = 10;
-		height = 10;
+		width = 15;
+		height = 15;
+		
 		health = 10;
 		aspeed = 5;
 	}
