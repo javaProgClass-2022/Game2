@@ -47,7 +47,7 @@ public class MainGame {
 	final static int PFH = PANH*3; //               spawning obstacles
 	
 	// quantity of bullets in a magazine
-	static int magazine = 10;
+	static int magazine = 99999999;
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
@@ -155,7 +155,7 @@ public class MainGame {
 			}
 			
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
-				if(entities.get(i).aspeed!=0) {
+				if(entities.get(i) instanceof Enemy) {
 					entities.get(i).move(p);
 				}
 			}
@@ -167,6 +167,10 @@ public class MainGame {
 			p.move();
 			
 			drPanel.repaint();
+			
+			if(time % 50 == 0) {
+				
+			}
 		}
 	}
 	
@@ -193,23 +197,23 @@ public class MainGame {
 				
 				switch(p.gun) {
 				case shotgun: 
-					bullets.add(new Shotgun(p.x, p.y, x, y + 30));
-					bullets.add(new Shotgun(p.x, p.y, x + 30, y));
-					bullets.add(new Shotgun(p.x, p.y, x - 30, y));
-					bullets.add(new Shotgun(p.x, p.y, x, y - 30));
+					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
 				break;
 				
 				case assaultRifle:
-					bullets.add(new AssaultRifle(p.x, p.y, x, y));
+					bullets.add(new AssaultRifle(p.x, p.y, x, y, p.vx, p.vy));
 					
 				break;
 				
 				case sniperRifle: 
-					bullets.add(new SniperRifle(p.x, p.y, x, y));
+					bullets.add(new SniperRifle(p.x, p.y, x, y, p.vx, p.vy));
 				break;
 				
 				default: 
-					bullets.add(new Pistol(p.x, p.y, x, y));
+					bullets.add(new Pistol(p.x, p.y, x, y, p.vx, p.vy));
 				}
 				
 				magazine -= 1;

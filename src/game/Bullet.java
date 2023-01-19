@@ -9,7 +9,7 @@ public class Bullet extends Rectangle {
 	int startX, startY;
 	int range = 200;
 	
-	Bullet(int startX, int startY, int targetX, int targetY) {
+	Bullet(int startX, int startY, int targetX, int targetY, int initX, int initY) {
 		this.x = startX;
 		this.y = startY;
 		
@@ -21,8 +21,8 @@ public class Bullet extends Rectangle {
 
         double distance = Math.sqrt(vx * vx + vy * vy);
 
-        this.dirX = ((vx / distance) * speed);
-        this.dirY = ((vy / distance) * speed);
+        this.dirX = ((vx / distance) * speed) + initX;
+        this.dirY = ((vy / distance) * speed) + initY;
         
     	width = 4; height = 4;
     	

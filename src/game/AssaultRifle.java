@@ -2,8 +2,8 @@ package game;
 
 public class AssaultRifle extends Bullet {
 
-	AssaultRifle(int startX, int startY, int targetX, int targetY) {
-		super(startX, startY, targetX, targetY);
+	AssaultRifle(int startX, int startY, int targetX, int targetY, int initX, int initY) {
+		super(startX, startY, targetX, targetY, initX, initY);
 		
 		damage = 5;
 

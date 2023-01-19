@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Entity {
+	
 	int health = 100;
-	double speed = 5;
+	static double speed = 5;
+	static int vx = 0;
+	static int vy = 0;
+	
 	
 	Gun gun;
 	
@@ -15,7 +19,7 @@ public class Player extends Entity {
 		x = 450; 
 		y = 400;
 		
-		gun = Gun.sniperRifle;
+		gun = Gun.assaultRifle;
 	}
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
@@ -23,16 +27,30 @@ public class Player extends Entity {
 		int x1 = x;
 		if(MainGame.bKeyl.up) {
 			y-=speed;
+//			if (vy != -speed) {
+//				vy -= speed;
+//			} 
 		}
 		if(MainGame.bKeyl.down) {
 			y+=speed;
+//			if (vy != speed) {
+//				vy += speed;
+//			}
+			
 		}
 		if(MainGame.bKeyl.left) {
 			x-=speed;
+//			if (vx != -speed) {
+//				vx -= speed;
+//			} 
 		}
 		if(MainGame.bKeyl.right) {
 			x+=speed;
+//			if (vx != speed) {
+//				vx += speed;
+//			}
 		}
+		
 		if(super.collide()) {//if it collides after moving, don't allow movement
 			health -= 1;
 

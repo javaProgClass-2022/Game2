@@ -5,8 +5,8 @@ import java.awt.Rectangle;
 public class SniperRifle extends Bullet {
 	int penetrations = 0;
 
-	SniperRifle(int startX, int startY, int targetX, int targetY) {
-		super(startX, startY, targetX, targetY);
+	SniperRifle(int startX, int startY, int targetX, int targetY, int initX, int initY) {
+		super(startX, startY, targetX, targetY, initX, initY);
 
 		damage = 10;
 
