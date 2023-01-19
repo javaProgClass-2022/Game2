@@ -5,11 +5,11 @@ import java.awt.Graphics2D;
 
 public class Player extends Entity {
 	
-	int health = 100;
+	static int health = 100;
 	static double speed = 5;
 	static int vx = 0;
 	static int vy = 0;
-	
+	boolean iframe = false;
 	
 	Gun gun;
 	
@@ -20,7 +20,10 @@ public class Player extends Entity {
 		y = 400;
 		
 		gun = Gun.assaultRifle;
+
 	}
+		
+	
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
 		int y1 = y;
