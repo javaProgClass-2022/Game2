@@ -38,8 +38,8 @@ public class MainGame {
 	}
 
 	/***** constants *****/
-	final static int PANW = 900;
-	final static int PANH = 800;
+	final static int PANW = 1000; //900
+	final static int PANH = 600; //800
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
@@ -48,6 +48,8 @@ public class MainGame {
 	
 	// quantity of bullets in a magazine
 	static int magazine = 99999999;
+	
+	static int level = 1;
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
@@ -170,6 +172,15 @@ public class MainGame {
 			
 			if(time % 50 == 0) {
 				
+			}
+			
+			if (time % 1000 == 0) {
+				level += 1;
+				for(Entity entity: entities) {
+					if (entity instanceof Enemy) {
+						entity.aspeed += level / 2;
+					}
+				}
 			}
 		}
 	}

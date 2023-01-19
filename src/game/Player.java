@@ -27,28 +27,19 @@ public class Player extends Entity {
 		int x1 = x;
 		if(MainGame.bKeyl.up) {
 			y-=speed;
-//			if (vy != -speed) {
-//				vy -= speed;
-//			} 
+
 		}
 		if(MainGame.bKeyl.down) {
 			y+=speed;
-//			if (vy != speed) {
-//				vy += speed;
-//			}
+
 			
 		}
 		if(MainGame.bKeyl.left) {
 			x-=speed;
-//			if (vx != -speed) {
-//				vx -= speed;
-//			} 
+
 		}
 		if(MainGame.bKeyl.right) {
 			x+=speed;
-//			if (vx != speed) {
-//				vx += speed;
-//			}
 		}
 		
 		if(super.collide()) {//if it collides after moving, don't allow movement
