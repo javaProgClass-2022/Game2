@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player extends Entity {
-	int health = 100;
+	static int health = 100;
 	double speed = 5;
+	boolean iframe = false;
 	Player(){
 		height=5;
 		width=5;
-		x = 450; 
-		y = 400;
+		x = 400; 
+		y=500;
 	}
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
