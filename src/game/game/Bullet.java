@@ -2,15 +2,20 @@ package game;
 
 import java.awt.Rectangle;
 
-public class Bullet extends Rectangle{
+public class Bullet extends Rectangle {
 	double dirX, dirY;
 	int damage = 10;
 	double xx,yy;
 	double speed = 6;
+	int startX, startY;
+	int range = 200;
 	
-	Bullet(int startX, int startY, int targetX, int targetY) {
+	Bullet(int startX, int startY, int targetX, int targetY, int initX, int initY)) {
 		xx = startX;
 		yy = startY;
+		
+		this.startX = startX;
+		this.startY = startY;
 		
 		double vx = targetX - startX;
         double vy = targetY - startY;
@@ -20,20 +25,27 @@ public class Bullet extends Rectangle{
         dirX = ((vx / distance) * speed);
         dirY = ((vy / distance) * speed);
 
-    	width = 2; height = 2;
+
+        this.dirX = ((vx / distance) * speed) + initX;
+        this.dirY = ((vy / distance) * speed) + initY;
         
+    	width = 4; height = 4;
+
 	}
 	
 	void move() {
 		
-		xx += dirX;
+	xx += dirX;
         yy += dirY;
         x=(int)xx;
         y=(int)yy;
-        if (collide()) {
+
+        if ((Math.abs(x - startX) + Math.abs(y - startY)) > range) {
+        	MainGame.bullets.remove(this);
+        } else if (collide()) {
         	MainGame.bullets.remove(this);
         }
-	}
+	
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) { 
@@ -48,9 +60,11 @@ public class Bullet extends Rectangle{
 						}
 						break;
 					}
+					break;
 				}
 			}
 		}
 		return c;
 	}
 }
+

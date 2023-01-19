@@ -36,13 +36,18 @@ public class MainGame {
 	}
 
 	/***** constants *****/
-	final static int PANW = 900;
-	final static int PANH = 800;
+	final static int PANW = 1000; //900
+	final static int PANH = 600; //800
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
 	final static int PFW = PANW*3;
 	final static int PFH = PANH*3;
+	
+	// quantity of bullets in a magazine
+	static int magazine = 99999999;
+	
+	static int level = 1;
 	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
@@ -53,11 +58,12 @@ public class MainGame {
 	int time;
 	int levelDelay=10000; //how long between levels
 	
+	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	
+
 	//constructor
 	MainGame() {
 		createAndShowGUI();
@@ -70,7 +76,7 @@ public class MainGame {
 		setupObstacles();
 	}
 	void setupObstacles() {
-		int n = 10; //number of obstacles to create
+		int n = 50; //number of obstacles to create
 		for(int i=0;i<n;i++) {
 			entities.add(new Obstacle());
 		}
@@ -100,6 +106,9 @@ public class MainGame {
 			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
+			this.addMouseListener(new BulletCoordinates());
+			this.setBackground(new Color(155, 143, 129));
+
 		}
 		
 		@Override
@@ -112,14 +121,27 @@ public class MainGame {
 				//TODO make camera a method?
 				int vx = entities.get(i).x-p.x+CX;
 				int vy = entities.get(i).y-p.y+CY;
-				if(vx<PANW&&vx>0&&vy>0&&vy<PANH) {
-					g2.drawRect(vx, vy, entities.get(i).width, entities.get(i).height);
+
+				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					
+					if (entities.get(i) instanceof Enemy) {
+						g2.setColor(new Color(28, 124, 25));
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					} else if (entities.get(i) instanceof Obstacle) {
+						g2.setColor(Color.blue);
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					} else {
+						g2.setColor(Color.black);
+						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+					}
+
 				}
 			}
 			for(Bullet bullet: bullets) {
 				int vx = (int) (bullet.x-p.x+CX);
 				int vy = (int) (bullet.y-p.y+CY);
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
+					g2.setColor(Color.black);
 					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
 			}
@@ -131,8 +153,9 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
+
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
-				if(entities.get(i).aspeed!=0) {
+				if(entities.get(i) instanceof Enemy) {
 					entities.get(i).move(p);
 				}
 			}
@@ -141,11 +164,25 @@ public class MainGame {
 			}
 
 			for(int i=bullets.size()-1;i>=0;i--) {//move all the enemies. Don't move obstacles
+
 				bullets.get(i).move();
 			}
 			Spawn();
 			p.move();
 			drPanel.repaint();
+			
+			if(time % 50 == 0) {
+				
+			}
+			
+			if (time % 1000 == 0) {
+				level += 1;
+				for(Entity entity: entities) {
+					if (entity instanceof Enemy) {
+						entity.aspeed += level / 2;
+					}
+				}
+			}
 		}
 	}
 
@@ -163,13 +200,37 @@ public class MainGame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			int vx = e.getX();
-			int vy = e.getY();
 
-			int x = p.x+vx-CX;
-			int y = p.y+vy-CY;
-
-			bullets.add(new Bullet(p.x, p.y, x, y));
+			if (magazine != 0) {
+				int vx = e.getX();
+				int vy = e.getY();
+			
+				int x = p.x+vx-CX;
+				int y = p.y+vy-CY;
+				
+				switch(p.gun) {
+				case shotgun: 
+					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
+				break;
+				
+				case assaultRifle:
+					bullets.add(new AssaultRifle(p.x, p.y, x, y, p.vx, p.vy));
+					
+				break;
+				
+				case sniperRifle: 
+					bullets.add(new SniperRifle(p.x, p.y, x, y, p.vx, p.vy));
+				break;
+				
+				default: 
+					bullets.add(new Pistol(p.x, p.y, x, y, p.vx, p.vy));
+				}
+				
+				magazine -= 1;
+			}
 
 		}
 		@Override
