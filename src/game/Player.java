@@ -16,7 +16,7 @@ public class Player extends Entity {
 	static int vy = 0;
 	static boolean iframe = false;
 	Gun gun;
-	
+
 	Player(){
 		height=5;
 		width=5;
@@ -24,9 +24,9 @@ public class Player extends Entity {
 		y = 450;	
 		gun = Gun.assaultRifle;
 	}
-		
-	
-	
+
+
+
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
 		int y1 = y;
 		int x1 = x;
@@ -40,7 +40,7 @@ public class Player extends Entity {
 			direction = "down";
 			y+=speed;
 
-			
+
 		}
 		if(MainGame.bKeyl.left) {
 			direction = "left";
@@ -51,7 +51,7 @@ public class Player extends Entity {
 			direction = "right";
 			x+=speed;
 		}
-		
+
 		if(super.collide()) {//if it collides after moving, don't allow movement
 			health -= 1;
 
@@ -60,6 +60,6 @@ public class Player extends Entity {
 		}
 		iframe = false;
 	}	
-	
-	
+
+
 }
