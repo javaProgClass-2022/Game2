@@ -13,11 +13,13 @@ public class Player extends Entity {
 	Gun gun;
 	
 	Player(){
-		height=5;
-		width=5;
-		x = 400; 
-		y = 450;	
-		gun = Gun.assaultRifle;
+		height= 10;
+		width= 10;
+	
+		gun = Gun.shotgun;
+
+		x = 450; 
+		y = 400;	
 	}
 		
 	
@@ -44,6 +46,9 @@ public class Player extends Entity {
 		}
 		
 		if(super.collide()) {//if it collides after moving, don't allow movement
+			health -= 1;
+			vy = 0;
+			vx = 0;
 
 			y = y1;
 			x = x1;
