@@ -19,7 +19,7 @@ public class Player extends Entity {
 		x = 450; 
 		y = 400;
 		
-		gun = Gun.assaultRifle;
+		gun = Gun.shotgun;
 
 	}
 		
@@ -47,7 +47,8 @@ public class Player extends Entity {
 		
 		if(super.collide()) {//if it collides after moving, don't allow movement
 			health -= 1;
-
+			vy = 0;
+			vx = 0;
 			y = y1;
 			x = x1;
 		}
