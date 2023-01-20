@@ -5,7 +5,6 @@ package game;
  */
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -87,16 +86,8 @@ public class MainGame {
 		JFrame frame = new JFrame("Murder in the Mesosoic");
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
-    
-		JPanel panel = new JPanel(new BorderLayout());
 
-
-		JPanel menu = new JPanel(new BorderLayout());
-		menu.setPreferredSize(new Dimension(1000, 150));
-		
-		panel.add(drPanel, BorderLayout.NORTH);
-		panel.add(menu, BorderLayout.SOUTH);
-		frame.add(panel);
+		frame.add(drPanel);
 		frame.pack();
 		frame.setLocationRelativeTo( null );		
 		frame.setVisible(true);		
@@ -162,11 +153,6 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
-      
-			if(time % spawnTime == 0) {//every few seconds spawns an enemy
-				
-				entities.add(new Enemy());
-			}
 
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i) instanceof Enemy) {
@@ -189,7 +175,7 @@ public class MainGame {
 				
 			}
 			
-			if (time % 5000 == 0) {
+			if (time % 1000 == 0) {
 				level += 1;
 				for(Entity entity: entities) {
 					if (entity instanceof Enemy) {
@@ -222,16 +208,12 @@ public class MainGame {
 				int x = p.x+vx-CX;
 				int y = p.y+vy-CY;
 				
-				// bullet shooting
 				switch(p.gun) {
 				case shotgun: 
-					
-					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 40;
-					
-					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * (y - p.x - distance)), Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * (x - p.x - distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * (x - p.x - distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * (y - p.y - distance)), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
 				break;
 				
 				case assaultRifle:

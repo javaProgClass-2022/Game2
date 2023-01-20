@@ -20,7 +20,6 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=true;
 				
-				// momentum speed
 				if (Player.vx != -Player.speed) {
 					Player.vx -= Player.speed;
 				} 
@@ -28,8 +27,6 @@ public class BetterKeyListener implements KeyListener{
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=true;
-				
-				// momentum speed
 				if (Player.vx != Player.speed) {
 					Player.vx += Player.speed;
 				} 
@@ -38,7 +35,6 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=true;
 				
-				// momentum speed
 				if (Player.vy != -Player.speed) {
 					Player.vy -= Player.speed;
 				}
@@ -46,7 +42,6 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=true;
 				
-				// momentum speed
 				if (Player.vy != Player.speed) {
 					Player.vy += Player.speed;
 				} 
@@ -58,26 +53,19 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=false;
 				
-				// momentum speed
 				Player.vx = 0;
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=false;
-				
-				// momentum speed
 				Player.vx = 0;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=false;
-				
-				// momentum speed
 				Player.vy = 0;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=false;
-				
-				// momentum speed
 				Player.vy = 0;
 			}
 		}
