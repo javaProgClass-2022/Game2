@@ -23,8 +23,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-//////////////////////////////
 import javax.swing.event.MouseInputListener;
 
 
@@ -44,8 +42,8 @@ public class MainGame {
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
-	final static int PFW = PANW*3; // the frame for 
-	final static int PFH = PANH*3; //               spawning obstacles
+	final static int PFW = PANW*3;
+	final static int PFH = PANH*3;
 	
 	// quantity of bullets in a magazine
 	static int magazine = 99999999;
@@ -56,14 +54,17 @@ public class MainGame {
 	DrawingPanel drPanel = new DrawingPanel();
 	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
-	int spawnTime = 100;
+	int enemySpawnTime = 100;
+	int hpSpawnTime = 50;
 	int time;
+	int levelDelay=10000; //how long between levels
 	
 	
 	/**** ArrayLists ****/
 	//stores player, enemies, obstacles and eventually, powerups
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+
 	//constructor
 	MainGame() {
 		createAndShowGUI();
@@ -86,7 +87,9 @@ public class MainGame {
 		JFrame frame = new JFrame("Murder in the Mesosoic");
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
+    
 		JPanel panel = new JPanel(new BorderLayout());
+
 
 		JPanel menu = new JPanel(new BorderLayout());
 		menu.setPreferredSize(new Dimension(1000, 150));
@@ -109,10 +112,12 @@ public class MainGame {
 		DrawingPanel() {
 			this.setBackground(Color.LIGHT_GRAY);
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
+			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 			this.addMouseListener(new BulletCoordinates());
 			this.setBackground(new Color(155, 143, 129));
+
 		}
 		
 		@Override
@@ -121,10 +126,11 @@ public class MainGame {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			//draw all the entities
-			for(int i = 0; i < entities.size(); i++) {//does camera calculations and displays each entity
+			for(int i = 0;i<entities.size();i++) {//does camera calculations and displays each entity
 				//TODO make camera a method?
 				int vx = entities.get(i).x-p.x+CX;
 				int vy = entities.get(i).y-p.y+CY;
+
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
 					
 					if (entities.get(i) instanceof Enemy) {
@@ -137,9 +143,9 @@ public class MainGame {
 						g2.setColor(Color.black);
 						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 					}
+
 				}
 			}
-			//draw all the bullets
 			for(Bullet bullet: bullets) {
 				int vx = (int) (bullet.x-p.x+CX);
 				int vy = (int) (bullet.y-p.y+CY);
@@ -148,6 +154,7 @@ public class MainGame {
 					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
 			}
+
 		}	
 	}
 	
@@ -155,21 +162,27 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
+      
 			if(time % spawnTime == 0) {//every few seconds spawns an enemy
 				
 				entities.add(new Enemy());
 			}
+
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i) instanceof Enemy) {
 					entities.get(i).move(p);
 				}
 			}
-			for(int i=bullets.size()-1;i>-1;i--) {
+			if(time%levelDelay==0&&enemySpawnTime>2) {
+				enemySpawnTime=enemySpawnTime/2;
+			}
+
+			for(int i=bullets.size()-1;i>=0;i--) {//move all the enemies. Don't move obstacles
+
 				bullets.get(i).move();
 			}
-			
+			Spawn();
 			p.move();
-			
 			drPanel.repaint();
 			
 			if(time % 50 == 0) {
@@ -186,7 +199,7 @@ public class MainGame {
 			}
 		}
 	}
-	
+
 	class BulletCoordinates implements MouseInputListener {
 
 		@Override
@@ -196,11 +209,12 @@ public class MainGame {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
+
 			if (magazine != 0) {
 				int vx = e.getX();
 				int vy = e.getY();
@@ -212,7 +226,7 @@ public class MainGame {
 				switch(p.gun) {
 				case shotgun: 
 					
-					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 20;
+					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 40;
 					
 					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * (y - p.x - distance)), Player.vx, Player.vy));
 					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * (x - p.x - distance)), y, Player.vx, Player.vy));
@@ -240,7 +254,6 @@ public class MainGame {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-		
 		}
 		@Override
 		public void mouseExited(MouseEvent e) {
@@ -257,7 +270,15 @@ public class MainGame {
 			// TODO Auto-generated method stub
 			
 		}
-		
+	}	
+	void Spawn() {
+		//Enemy
+		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
+			entities.add(new Enemy());
+		}
+		//healthpack
+		if(time%hpSpawnTime==0) {
+			entities.add(new Healthpack());
+		}
 	}
 }
-
