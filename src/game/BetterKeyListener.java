@@ -3,7 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class BetterKeyListener implements KeyListener{
+public class BetterKeyListener implements KeyListener {
 		boolean up,down,left,right;
 		
 		BetterKeyListener(){

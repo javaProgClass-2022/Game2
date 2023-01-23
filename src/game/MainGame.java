@@ -42,8 +42,8 @@ public class MainGame {
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
-	final static int PFW = PANW*3;
-	final static int PFH = PANH*3;
+	final static int PFW = PANW* 8; // 3
+	final static int PFH = PANH * 8; // 3
 	
 	// quantity of bullets in a magazine
 	static int magazine = 99999999;
@@ -77,7 +77,7 @@ public class MainGame {
 		setupObstacles();
 	}
 	void setupObstacles() {
-		int n = 50; //number of obstacles to create
+		int n = 0; //number of obstacles to create
 		for(int i=0;i<n;i++) {
 			entities.add(new Obstacle());
 		}
@@ -112,7 +112,6 @@ public class MainGame {
 		DrawingPanel() {
 			this.setBackground(Color.LIGHT_GRAY);
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
-			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 			this.addMouseListener(new BulletCoordinates());
@@ -134,18 +133,26 @@ public class MainGame {
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
 					
 					if (entities.get(i) instanceof Enemy) {
-						g2.setColor(new Color(28, 124, 25));
-						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
+						
+						if (entities.get(i).damage == -1) {
+							g2.setColor(Color.yellow);
+						} else if (entities.get(i).damage == -20) {
+							g2.setColor(Color.red);
+						} else {
+							g2.setColor(new Color(28, 124, 25));
+						}
+						
+						
 					} else if (entities.get(i) instanceof Obstacle) {
 						g2.setColor(Color.blue);
-						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 					} else {
 						g2.setColor(Color.black);
-						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 					}
-
+					
+					g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
+			
 			for(Bullet bullet: bullets) {
 				int vx = (int) (bullet.x-p.x+CX);
 				int vy = (int) (bullet.y-p.y+CY);
@@ -163,16 +170,12 @@ public class MainGame {
 		public void actionPerformed(ActionEvent e) {
 			time++;
       
-			if(time % spawnTime == 0) {//every few seconds spawns an enemy
-				
-				entities.add(new Enemy());
-			}
-
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i) instanceof Enemy) {
 					entities.get(i).move(p);
 				}
 			}
+			
 			if(time%levelDelay==0&&enemySpawnTime>2) {
 				enemySpawnTime=enemySpawnTime/2;
 			}
@@ -181,22 +184,19 @@ public class MainGame {
 
 				bullets.get(i).move();
 			}
-			Spawn();
+			spawn();
 			p.move();
 			drPanel.repaint();
 			
-			if(time % 50 == 0) {
-				
-			}
 			
-			if (time % 5000 == 0) {
-				level += 1;
-				for(Entity entity: entities) {
-					if (entity instanceof Enemy) {
-						entity.aspeed += level / 2;
-					}
-				}
-			}
+//			if (time % 5000 == 0) {
+//				level += 1;
+//				for(Entity entity: entities) {
+//					if (entity instanceof Enemy) {
+//						entity.aspeed += level / 2;
+//					}
+//				}
+//			}
 		}
 	}
 
@@ -225,13 +225,13 @@ public class MainGame {
 				// bullet shooting
 				switch(p.gun) {
 				case shotgun: 
-					
+					// I gave up (the spread is broken
 					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 40;
 					
-					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * (y - p.x - distance)), Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * (x - p.x - distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * (x - p.x - distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * (y - p.y - distance)), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * (((y - p.x) - (x - p.x)) / distance)), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * (((x - p.x) - (y - p.y)) / distance)), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * (((x - p.x) - (y - p.y)) / distance)), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * (((y - p.y) - (x - p.x)) / distance)), Player.vx, Player.vy));
 				break;
 				
 				case assaultRifle:
@@ -271,14 +271,15 @@ public class MainGame {
 			
 		}
 	}	
-	void Spawn() {
+	void spawn() {
 		//Enemy
 		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
 			entities.add(new Enemy());
 		}
-		//healthpack
+		//health pack
 		if(time%hpSpawnTime==0) {
-			entities.add(new Healthpack());
+			
+			entities.add(new Gun());
 		}
 	}
 }

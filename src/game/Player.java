@@ -6,17 +6,17 @@ import java.awt.Graphics2D;
 public class Player extends Entity {
 
 	static int health = 100;
-	static double speed = 5;
+	static double speed = 3;
 	static int vx = 0;
 	static int vy = 0;
 	static boolean iframe = false;
-	Gun gun;
+	static GunType gun;
 	
 	Player(){
 		height= 10;
 		width= 10;
 	
-		gun = Gun.shotgun;
+		gun = GunType.shotgun;
 
 		x = 450; 
 		y = 400;	

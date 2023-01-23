@@ -18,7 +18,7 @@ public class Entity extends Rectangle{
 					c = true;
 					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
 
-						MainGame.p.iframe = true;
+						Player.iframe = true;
 						Player.health-=damage;
 					}
 					break;
