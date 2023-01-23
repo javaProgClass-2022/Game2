@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 public class Pterodactyl extends Enemy{
 	Pterodactyl(){
 		health = 5;
-		aspeed = 3.2;
+		aspeed = 2.3;
 		damage = 2;
 		width = 10;
 		height = 10;

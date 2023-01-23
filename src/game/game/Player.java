@@ -14,8 +14,8 @@ public class Player extends Entity {
 	Player(){
 		height=5;
 		width=5;
-		x = 400; 
-		y = 450;	
+		x = 1200; 
+		y = 1350;	
 		color = Color.black;
 		gun = Gun.assaultRifle;
 	}
