@@ -8,7 +8,6 @@ public class Enemy extends Entity{
 
 		width = 15;
 		height = 15;
-
 		health = 10;
 		damage = 1;
 		aspeed = 5;

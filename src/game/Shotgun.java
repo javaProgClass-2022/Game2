@@ -11,7 +11,7 @@ public class Shotgun extends Bullet {
 		height = 3;
 		
 		speed = 4;
-		
-		range = 100;
+		range = 200;
+
 	}
 }
