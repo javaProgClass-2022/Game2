@@ -19,25 +19,37 @@ public class BetterKeyListener implements KeyListener {
 		public void keyPressed(KeyEvent e) {//when arrow keys are pressed, sets the corresponding variables to true
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=true;
-
-				Player.vx = -(int)Player.speed;
-
+				
+				// momentum speed
+				if (Player.vx != -Player.speed) {
+					Player.vx -= Player.speed;
+				} 
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=true;
-
-				Player.vx = (int)Player.speed;
+				
+				// momentum speed
+				if (Player.vx != Player.speed) {
+					Player.vx += Player.speed;
+				} 
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=true;
-				Player.vy = -(int)Player.speed;
+				
+				// momentum speed
+				if (Player.vy != -Player.speed) {
+					Player.vy -= Player.speed;
+				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=true;
-				Player.vy = (int)Player.speed;
-
+				
+				// momentum speed
+				if (Player.vy != Player.speed) {
+					Player.vy += Player.speed;
+				} 
 			}
 			
 		}
@@ -47,14 +59,13 @@ public class BetterKeyListener implements KeyListener {
 				left=false;
 				
 				// momentum speed
-
 				Player.vx = 0;
+				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=false;
 				
 				// momentum speed
-
 				Player.vx = 0;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -67,7 +78,6 @@ public class BetterKeyListener implements KeyListener {
 				down=false;
 				
 				// momentum speed
-
 				Player.vy = 0;
 			}
 		}

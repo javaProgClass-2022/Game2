@@ -1,4 +1,5 @@
 package game;
+
 import java.awt.Rectangle;
 import java.util.Random;
 
@@ -44,4 +45,6 @@ public class Gun extends Powerup {
 		}
 		return c;
 	}
+	
+
 }

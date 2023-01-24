@@ -20,6 +20,7 @@ public class Enemy extends Entity{
 
 		health = 10;
 		damage = 1;
-		aspeed = 5;
+		aspeed = 2;
 	}	
 }
+

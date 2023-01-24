@@ -22,8 +22,6 @@ public class SniperRifle extends Bullet {
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
 			if(MainGame.entities.get(i) instanceof Enemy && !(MainGame.entities.get(i) instanceof Powerup)) {
-
-
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					if (penetrations < 2) {
