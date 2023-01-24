@@ -3,7 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class BetterKeyListener implements KeyListener{
+public class BetterKeyListener implements KeyListener {
 		boolean up,down,left,right;
 		
 		BetterKeyListener(){
@@ -20,21 +20,38 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=true;
 				
-				Player.vx = -(int)Player.speed;
+
+				// momentum speed
+				if (Player.vx != -Player.speed) {
+					Player.vx -= Player.speed;
+				} 
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=true;
-				Player.vx = (int)Player.speed;
+
+				
+				// momentum speed
+				if (Player.vx != Player.speed) {
+					Player.vx += Player.speed;
+				} 
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=true;
-				Player.vy = -(int)Player.speed;
+				
+				// momentum speed
+				if (Player.vy != -Player.speed) {
+					Player.vy -= Player.speed;
+				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=true;
-				Player.vy = (int)Player.speed;
+				
+				// momentum speed
+				if (Player.vy != Player.speed) {
+					Player.vy += Player.speed;
+				} 
 			}
 			
 		}
@@ -43,18 +60,30 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=false;
 				
+
+				// momentum speed
 				Player.vx = 0;
+				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=false;
-				Player.vx = 0;
+				
+				// momentum speed
+
+        Player.vx = 0;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=false;
+
+				
+				// momentum speed
 				Player.vy = 0;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=false;
+
+				
+				// momentum speed
 				Player.vy = 0;
 			}
 		}

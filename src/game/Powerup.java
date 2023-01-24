@@ -45,7 +45,7 @@ public class Powerup extends Enemy {
 						MainGame.p.iframe=true;
 						MainGame.entities.remove(this);
 					}
-					i = 100000;//exit the for loop
+					break;
 				}
 			}
 		}

@@ -4,6 +4,7 @@ public class Shotgun extends Bullet {
 
 	Shotgun(int startX, int startY, int targetX, int targetY, int initX, int initY) {
 		super(startX, startY, targetX, targetY, initX, initY);
+
 	
 		damage = 3;
 
@@ -12,6 +13,8 @@ public class Shotgun extends Bullet {
 		
 		speed = 4;
 		
-		range = 100;
+
+		range = 200;
+
 	}
 }
