@@ -2,7 +2,7 @@
 # .classpath depends on the version of Eclipse used (I believe).
 # .project is also computer specific as far as I know so you can uncomment it too.
 .classpath
-.project
+ .project
 
 .metadata
 bin/
