@@ -23,12 +23,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
+
+//import swing_pgm.MigEvent.Exit;
+//import swing_pgm.MigEvent.Submit;
 
 
 
@@ -57,8 +61,8 @@ public class MainGame {
 
 	// quantity of bullets in a magazine
 	static int magazine = 99999999;
-
 	static int level = 1;
+	static boolean exit = false;
 
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
@@ -170,6 +174,40 @@ public class MainGame {
 						g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 					}
 				}
+
+				int margin = PANW - 180;
+				g2.setColor(Color.WHITE);
+				g2.fillRect(PANW - 200, PANH - 160, 200, 160);
+				g2.setColor(Color.GREEN);
+				g2.fillRect(margin, PANH - 105, (int)(Player.health/100.0*160), 10);
+				g2.fillRect(margin, PANH - 50, (int)(magazine/99999999.0*160), 10);
+				g2.setColor(Color.BLACK);
+				g2.drawString("Level: "+ level, margin, PANH - 130);
+				g2.drawString("Health", margin, PANH - 110);
+				g2.drawString("Bullets Left", margin, PANH - 55);
+				g2.drawRect(margin, PANH - 105,  160, 10);
+				g2.drawRect(margin, PANH - 50,  160, 10);
+
+				String weaponType;
+				switch(p.gun) {
+				case shotgun: 
+					weaponType = "Shotgun";
+					break;
+
+				case assaultRifle:
+					weaponType = "Assault Rifle";
+					break;
+
+				case sniperRifle: 
+					weaponType = "Sniper Rifle";
+					break;
+
+				default: 
+					weaponType = "Pistol";
+				}
+
+				g2.drawString("Weapon: " + weaponType, margin, PANH - 75);
+
 			}
 
 
@@ -181,10 +219,15 @@ public class MainGame {
 					g2.fillRect(vx, vy, bullet.width, bullet.height);
 				}
 			}
-
 		}	
 	}
-
+	class Exit implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			exit = true;
+			System.out.println("exit");
+		}
+	}
 	class TL1 implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -253,6 +296,7 @@ public class MainGame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
+
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -262,13 +306,14 @@ public class MainGame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
+			int vx = e.getX();
+			int vy = e.getY();
+
+			int x = p.x+vx-CX;
+			int y = p.y+vy-CY;
+
 
 			if (magazine != 0) {
-				int vx = e.getX();
-				int vy = e.getY();
-
-				int x = p.x+vx-CX;
-				int y = p.y+vy-CY;
 
 				switch(p.gun) {
 				case shotgun: 
@@ -293,7 +338,6 @@ public class MainGame {
 
 				magazine -= 1;
 			}
-
 		}
 		@Override
 		public void mouseEntered(MouseEvent e) {

@@ -57,6 +57,7 @@ public class Player extends Entity {
 
 			y = y1;
 			x = x1;
+			System.out.println(health);
 		}
 		iframe = false;
 	}	
