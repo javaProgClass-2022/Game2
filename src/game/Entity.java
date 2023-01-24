@@ -1,13 +1,11 @@
 package game;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
 
 	int damage;//damage on touch
-	double aspeed;//autospeed. For automatic movement
-	Color color;
+	int aspeed;//autospeed. For automatic movement
 
 	int health;
 	boolean collide(){//goes through entities and checks if anything intersects with this
@@ -18,8 +16,7 @@ public class Entity extends Rectangle{
 				//intersection is empty if doesn't intersect. Other values irrelevant.
 				if (!intersection.isEmpty()) {
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
-
+					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
 
 						Player.iframe = true;
 						Player.health-=damage;
@@ -58,7 +55,7 @@ public class Entity extends Rectangle{
 		//if vertical. NaN != NaN and angle is NaN if line is vertical
 		if(angle!=angle) {
 			x=x1;
-			y=(int) (h*aspeed);
+			y=h*aspeed;
 		}
 		//various failed attempts at preventing enemies from getting stuck on walls
 		/*if(x==x1&&y==y1) {
