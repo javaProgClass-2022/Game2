@@ -10,12 +10,9 @@ public class Pistol extends Bullet {
 		
 			
 		damage = 10;
-
 		width = 3; 
 		height = 3;
-		
 		speed = 5;
-		
 		range = 300;
 	}
 	

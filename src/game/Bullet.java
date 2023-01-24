@@ -35,10 +35,10 @@ public class Bullet extends Rectangle {
 	
 	void move() {
 		
-	xx += dirX;
-        yy += dirY;
-        x=(int)xx;
-        y=(int)yy;
+		xx += dirX;
+	        yy += dirY;
+	        x=(int)xx;
+	        y=(int)yy;
 
         if ((Math.hypot(x-startX, y-startY)) > range) {
         	MainGame.bullets.remove(this);
@@ -66,4 +66,3 @@ public class Bullet extends Rectangle {
 		return c;
 	}
 }
-

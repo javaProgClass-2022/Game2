@@ -9,12 +9,9 @@ public class SniperRifle extends Bullet {
 		super(startX, startY, targetX, targetY, initX, initY);
 
 		damage = 10;
-
 		width = 4; 
 		height = 4;
-		
 		speed = 8;
-		
 		range = 800;
 	}
 
