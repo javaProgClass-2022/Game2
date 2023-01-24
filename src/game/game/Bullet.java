@@ -46,21 +46,23 @@ public class Bullet extends Rectangle {
         	MainGame.bullets.remove(this);
         }
     }
-
 	
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) { 
-
-			if(MainGame.entities.get(i) instanceof Enemy && !(MainGame.entities.get(i) instanceof Powerup)) {
+			if(MainGame.entities.get(i) instanceof Enemy) {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-						MainGame.entities.get(i).health -=damage;
+					if(!(MainGame.entities.get(i) instanceof Powerup)){
+						MainGame.entities.get(i).health-=damage;
+						System.out.println(MainGame.entities.get(i).health);
 						if (MainGame.entities.get(i).health<=0) {
 							MainGame.entities.remove(i);
 						}
 						break;
+					}
+					break;
 				}
 			}
 		}

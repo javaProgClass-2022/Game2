@@ -8,7 +8,6 @@ public class Entity extends Rectangle{
 	int damage;//damage on touch
 	double aspeed;//autospeed. For automatic movement
 	Color color;
-
 	int health;
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
@@ -16,10 +15,13 @@ public class Entity extends Rectangle{
 			if(MainGame.entities.get(i)!=this) {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				//intersection is empty if doesn't intersect. Other values irrelevant.
-				if (!intersection.isEmpty()) {
+				if(y<0||y>MainGame.PFH||x<0||x>MainGame.PFW){
+					c = true;
+					break;
+				}
+				else if (!intersection.isEmpty()) {
 					c = true;
 					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
-
 
 						Player.iframe = true;
 						Player.health-=damage;
