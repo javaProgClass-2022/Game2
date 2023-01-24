@@ -1,13 +1,12 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Player extends Entity {
 
 	static int health = 100;
-
-
-	static double speed = 4.24264;
+	static double speed = 3;
 	static int vx = 0;
 	static int vy = 0;
 	static boolean iframe = false;
@@ -16,12 +15,11 @@ public class Player extends Entity {
 	Player(){
 		height= 10;
 		width= 10;
-    
-	  color = Color.black;
+	
 		gun = GunType.shotgun;
 
-		x = 400; 
-		y = 450;	
+		x = 450; 
+		y = 400;	
 	}
 		
 	
@@ -29,13 +27,7 @@ public class Player extends Entity {
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
 		int y1 = y;
 		int x1 = x;
-    
-		if(MainGame.bKeyl.down&&MainGame.bKeyl.right||MainGame.bKeyl.up&&MainGame.bKeyl.left||MainGame.bKeyl.up&&MainGame.bKeyl.right||MainGame.bKeyl.down&&MainGame.bKeyl.left) {
-			speed = 3;
-		}else {
-			speed = 4.24264;
-		}
-
+		System.out.println(health);
 		if(MainGame.bKeyl.up) {
 			y-=speed;
 
@@ -45,11 +37,6 @@ public class Player extends Entity {
 
 			
 		}
-		
-		if(super.collide()) {//if it collides after moving, don't allow movement
-			y = y1;
-		}
-		
 		if(MainGame.bKeyl.left) {
 			x-=speed;
 
@@ -59,14 +46,13 @@ public class Player extends Entity {
 		}
 		
 		if(super.collide()) {//if it collides after moving, don't allow movement
-
+			health -= 1;
 			vy = 0;
 			vx = 0;
 
 			y = y1;
 			x = x1;
 		}
-
-    iframe = false;
+		iframe = false;
 	}	
 }

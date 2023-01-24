@@ -50,23 +50,12 @@ public class MainGame {
 	
 	static int level = 1;
 	
-	// quantity of bullets in a magazine
-	static int magazine = 99999999;
-	
-	static int level = 1;
-	
 	/***** instance variables (global) *****/
 	DrawingPanel drPanel = new DrawingPanel();
 	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int enemySpawnTime = 100;
-
-  int triceratopsSpawnTime = 300;
-	int velociraptorSpawnTime = 500;
-	int tRexSpawnTime = 800;
-	int pterodactylSpawnTime = 600;
-	int hpSpawnTime = 5000;
-
+	int hpSpawnTime = 50;
 	int time;
 	int levelDelay=10000; //how long between levels
 	
@@ -88,9 +77,7 @@ public class MainGame {
 		setupObstacles();
 	}
 	void setupObstacles() {
-
-    int n = 50; //number of obstacles to create
-
+		int n = 0; //number of obstacles to create
 		for(int i=0;i<n;i++) {
 			entities.add(new Obstacle());
 		}
@@ -100,9 +87,9 @@ public class MainGame {
 		JFrame frame = new JFrame("Murder in the Mesosoic");
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
-
     
 		JPanel panel = new JPanel(new BorderLayout());
+
 
 		JPanel menu = new JPanel(new BorderLayout());
 		menu.setPreferredSize(new Dimension(1000, 150));
@@ -125,7 +112,6 @@ public class MainGame {
 		DrawingPanel() {
 			this.setBackground(Color.LIGHT_GRAY);
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
-			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 			this.addMouseListener(new BulletCoordinates());
@@ -145,8 +131,24 @@ public class MainGame {
 				int vy = entities.get(i).y-p.y+CY;
 
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
-
-          g2.setColor(entities.get(i).color);
+					
+					if (entities.get(i) instanceof Enemy) {
+						
+						if (entities.get(i).damage == -1) {
+							g2.setColor(Color.yellow);
+						} else if (entities.get(i).damage == -20) {
+							g2.setColor(Color.red);
+						} else {
+							g2.setColor(new Color(28, 124, 25));
+						}
+						
+						
+					} else if (entities.get(i) instanceof Obstacle) {
+						g2.setColor(Color.blue);
+					} else {
+						g2.setColor(Color.black);
+					}
+					
 					g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
@@ -160,7 +162,6 @@ public class MainGame {
 				}
 			}
 
-
 		}	
 	}
 	
@@ -168,7 +169,6 @@ public class MainGame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			time++;
-
       
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i) instanceof Enemy) {
@@ -184,23 +184,19 @@ public class MainGame {
 
 				bullets.get(i).move();
 			}
-			Spawn();
+			spawn();
 			p.move();
 			drPanel.repaint();
 			
-			if(time % 50 == 0) {
-				
-			}
 			
-			if (time % 1000 == 0) {
-				level += 1;
-				/*for(Entity entity: entities) {
-					if (entity instanceof Enemy) {
-						entity.aspeed += level / 2;
-					}
-				}*/
-			}
-
+//			if (time % 5000 == 0) {
+//				level += 1;
+//				for(Entity entity: entities) {
+//					if (entity instanceof Enemy) {
+//						entity.aspeed += level / 2;
+//					}
+//				}
+//			}
 		}
 	}
 
@@ -226,7 +222,6 @@ public class MainGame {
 				int x = p.x+vx-CX;
 				int y = p.y+vy-CY;
 				
-
 				// bullet shooting
 				switch(p.gun) {
 				case shotgun: 
@@ -276,28 +271,12 @@ public class MainGame {
 			
 		}
 	}	
-	void Spawn() {
-
+	void spawn() {
 		//Enemy
-		if(time%triceratopsSpawnTime==0) {//every few seconds spawns an enemy
-			entities.add(new Triceratops());
+		if(time%enemySpawnTime==0) {//every few seconds spawns an enemy
+			entities.add(new Enemy());
 		}
-		if(time%velociraptorSpawnTime==0) {//every few seconds spawns an enemy
-			int spawnNum = 5;
-			int x = (int) (MainGame.PANW*Math.random());
-			int y = (int) (MainGame.PANH*Math.random());
-			for(int i=0;i<spawnNum;i++) {
-				entities.add(new Raptor(x, y));
-			}
-		}
-		if(time%tRexSpawnTime==0) {//every few seconds spawns an enemy
-			entities.add(new TRex());
-		}
-		if(time%pterodactylSpawnTime==0) {
-			entities.add(new Pterodactyl());
-		}
-		
-
+		//health pack
 		if(time%hpSpawnTime==0) {
 			
 			entities.add(new Gun());
