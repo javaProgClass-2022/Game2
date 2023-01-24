@@ -35,10 +35,10 @@ public class Bullet extends Rectangle {
 	
 	void move() {
 		
-	xx += dirX;
-        yy += dirY;
-        x=(int)xx;
-        y=(int)yy;
+		xx += dirX;
+	        yy += dirY;
+	        x=(int)xx;
+	        y=(int)yy;
 
         if ((Math.abs(x - startX) + Math.abs(y - startY)) > range) {
         	MainGame.bullets.remove(this);
@@ -46,7 +46,6 @@ public class Bullet extends Rectangle {
         	MainGame.bullets.remove(this);
         }
     }
-
 	
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
@@ -68,4 +67,3 @@ public class Bullet extends Rectangle {
 		return c;
 	}
 }
-
