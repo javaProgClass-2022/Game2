@@ -59,6 +59,8 @@ public class Bullet extends Rectangle {
 							MainGame.entities.remove(i);
 						}
 						break;
+					}
+					break;
 				}
 			}
 		}
