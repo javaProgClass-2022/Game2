@@ -5,7 +5,6 @@ package game;
  */
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -42,13 +41,8 @@ public class MainGame {
 	final static int TIMERSPEED = 10;
 	final static int CX = PANW/2;
 	final static int CY = PANH/2;
-	final static int PFW = PANW* 8; // 3
-	final static int PFH = PANH * 8; // 3
-	
-	// quantity of bullets in a magazine
-	static int magazine = 99999999;
-	
-	static int level = 1;
+	final static int PFW = PANW*3;
+	final static int PFH = PANH*3;
 	
 	// quantity of bullets in a magazine
 	static int magazine = 99999999;
@@ -60,13 +54,11 @@ public class MainGame {
 	static Player p;
 	static BetterKeyListener bKeyl= new BetterKeyListener();
 	int enemySpawnTime = 100;
-
-  int triceratopsSpawnTime = 300;
+	int triceratopsSpawnTime = 300;
 	int velociraptorSpawnTime = 500;
 	int tRexSpawnTime = 800;
 	int pterodactylSpawnTime = 600;
 	int hpSpawnTime = 5000;
-
 	int time;
 	int levelDelay=10000; //how long between levels
 	
@@ -88,9 +80,7 @@ public class MainGame {
 		setupObstacles();
 	}
 	void setupObstacles() {
-
-    int n = 50; //number of obstacles to create
-
+		int n = 50; //number of obstacles to create
 		for(int i=0;i<n;i++) {
 			entities.add(new Obstacle());
 		}
@@ -101,15 +91,7 @@ public class MainGame {
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );		
 		frame.setResizable(false);
 
-    
-		JPanel panel = new JPanel(new BorderLayout());
-
-		JPanel menu = new JPanel(new BorderLayout());
-		menu.setPreferredSize(new Dimension(1000, 150));
-		
-		panel.add(drPanel, BorderLayout.NORTH);
-		panel.add(menu, BorderLayout.SOUTH);
-		frame.add(panel);
+		frame.add(drPanel);
 		frame.pack();
 		frame.setLocationRelativeTo( null );		
 		frame.setVisible(true);		
@@ -145,8 +127,7 @@ public class MainGame {
 				int vy = entities.get(i).y-p.y+CY;
 
 				if(vx < PANW && vx > 0 && vy > 0 && vy < PANH) {
-
-          g2.setColor(entities.get(i).color);
+					g2.setColor(entities.get(i).color);
 					g2.fillRect(vx, vy, entities.get(i).width, entities.get(i).height);
 				}
 			}
@@ -160,7 +141,6 @@ public class MainGame {
 				}
 			}
 
-
 		}	
 	}
 	
@@ -169,13 +149,11 @@ public class MainGame {
 		public void actionPerformed(ActionEvent e) {
 			time++;
 
-      
 			for(int i=0;i<entities.size();i++) {//move all the enemies. Don't move obstacles
 				if(entities.get(i) instanceof Enemy) {
 					entities.get(i).move(p);
 				}
 			}
-			
 			if(time%levelDelay==0&&enemySpawnTime>2) {
 				enemySpawnTime=enemySpawnTime/2;
 			}
@@ -200,7 +178,6 @@ public class MainGame {
 					}
 				}*/
 			}
-
 		}
 	}
 
@@ -226,17 +203,12 @@ public class MainGame {
 				int x = p.x+vx-CX;
 				int y = p.y+vy-CY;
 				
-
-				// bullet shooting
 				switch(p.gun) {
 				case shotgun: 
-					// I gave up (the spread is broken
-					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 40;
-					
-					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * (((y - p.x) - (x - p.x)) / distance)), Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * (((x - p.x) - (y - p.y)) / distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * (((x - p.x) - (y - p.y)) / distance)), y, Player.vx, Player.vy));
-					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * (((y - p.y) - (x - p.x)) / distance)), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y + (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x + (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x - (int)Math.floor(Math.random() * 26), y, Player.vx, Player.vy));
+					bullets.add(new Shotgun(p.x, p.y, x, y - (int)Math.floor(Math.random() * 26), Player.vx, Player.vy));
 				break;
 				
 				case assaultRifle:
@@ -277,7 +249,6 @@ public class MainGame {
 		}
 	}	
 	void Spawn() {
-
 		//Enemy
 		if(time%triceratopsSpawnTime==0) {//every few seconds spawns an enemy
 			entities.add(new Triceratops());
@@ -297,10 +268,9 @@ public class MainGame {
 			entities.add(new Pterodactyl());
 		}
 		
-
+		//healthpack
 		if(time%hpSpawnTime==0) {
-			
-			entities.add(new Gun());
+			entities.add(new Healthpack());
 		}
 	}
 }
