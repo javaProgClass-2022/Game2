@@ -1,16 +1,31 @@
 package game;
+
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.Random;
 
 public class Gun extends Powerup {
 	Gun(){
-		//spawns at random coordinates for testing purposes 
-		x = (int) (MainGame.PANW*Math.random());
-		y = (int) (MainGame.PANH*Math.random());
+		int n = (int) (200*Math.random());
+		if(n>=100) {
+			x=MainGame.p.x-MainGame.PANW/2-n;
+		}
+		else {
+			x=MainGame.p.x+MainGame.PANW/2+n;
+		}
+		
+		int m = (int) (200*Math.random());
+		if(m>=100) {
+			y=MainGame.p.y-MainGame.PANH/2-m;
+		}
+		else {
+			y=MainGame.p.y+MainGame.PANH/2+m;
+		}
 		width = 20;
 		height = 20;
 		aspeed=10;
-		damage = -1;
+		damage = 0;
+		color = Color.yellow;
 	}
 	
 	@Override
@@ -22,7 +37,7 @@ public class Gun extends Powerup {
 				//intersection is empty if doesn't intersect. Other values irrelevant.
 				if (!intersection.isEmpty()) {
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
+					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
 
 						
 						GunType[] values = GunType.values();

@@ -8,6 +8,10 @@ public class Obstacle extends Entity{
 		y = (int) (MainGame.PFH*Math.random());
 		width = (int) (100*Math.random()+20);
 		height = (int) (100*Math.random()+20);
+		while(collide()) {
+			x = (int) (MainGame.PFW*Math.random());
+			y = (int) (MainGame.PFH*Math.random());
+		}
 		aspeed=0;
 		if(width/height>1.5||height/width>1.5) {
 			color = new Color(156, 86, 51);
