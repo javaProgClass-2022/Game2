@@ -1,7 +1,6 @@
 package game;
 
 public class Enemy extends Entity{
-
 	Enemy(){
 		//spawns at random coordinates for testing purposes 
 		int n = (int) (200*Math.random());
