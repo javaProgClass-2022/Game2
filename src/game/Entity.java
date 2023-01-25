@@ -9,6 +9,7 @@ public class Entity extends Rectangle{
 	double aspeed;//autospeed. For automatic movement
 	Color color;
 	int health;
+	static String direction = "";
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
@@ -41,8 +42,14 @@ public class Entity extends Rectangle{
 		int v;
 		
 		//detect which general direction movement is in
-		if(x>m.x)h=-1;
-		else h=1;
+		if(x>m.x) {
+			h=-1;
+			direction = "left";
+		}
+		else {
+			h=1;
+			direction = "right";
+		}
 		if(y>m.y)v=-1;
 		else v=1;
 		
