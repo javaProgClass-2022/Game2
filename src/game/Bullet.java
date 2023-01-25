@@ -40,7 +40,7 @@ public class Bullet extends Rectangle {
 	        x=(int)xx;
 	        y=(int)yy;
 
-        if ((Math.abs(x - startX) + Math.abs(y - startY)) > range) {
+        if ((Math.hypot(x-startX, y-startY)) > range) {
         	MainGame.bullets.remove(this);
         } else if (collide()) {
         	MainGame.bullets.remove(this);
@@ -50,15 +50,14 @@ public class Bullet extends Rectangle {
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) { 
-			if(MainGame.entities.get(i) instanceof Enemy && !(MainGame.entities.get(i) instanceof Powerup)) {
+			if(MainGame.entities.get(i) instanceof Enemy&&!(MainGame.entities.get(i) instanceof Powerup)) {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-						MainGame.entities.get(i).health -=damage;
-						if (MainGame.entities.get(i).health<=0) {
-							MainGame.entities.remove(i);
-						}
-						break;
+					MainGame.entities.get(i).health-=damage;
+					System.out.println(MainGame.entities.get(i).health);
+					if (MainGame.entities.get(i).health<=0) {
+						MainGame.entities.remove(i);
 					}
 					break;
 				}
