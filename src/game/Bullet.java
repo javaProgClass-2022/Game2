@@ -3,6 +3,7 @@ package game;
 import java.awt.Rectangle;
 
 public class Bullet extends Rectangle {
+	private static final long serialVersionUID = 1L;
 	double dirX, dirY;
 	int damage = 10;
 	double xx,yy;

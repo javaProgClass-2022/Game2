@@ -5,6 +5,7 @@ package game;
  */
 
 import java.awt.BasicStroke;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -172,7 +173,7 @@ public class MainGame {
 
 				bullets.get(i).move();
 			}
-			Spawn();
+			spawn();
 			p.move();
 			drPanel.repaint();
 			
@@ -213,7 +214,7 @@ public class MainGame {
 				int x = p.x+vx-CX;
 				int y = p.y+vy-CY;
 				
-				switch(p.gun) {
+				switch(Player.gun) {
 				case shotgun: 
 					// I gave up (the spread is broken
 					double distance = Math.sqrt((x - p.x) * (x - p.x) + (x - p.y) * (x - p.y)) / 40;
@@ -225,16 +226,16 @@ public class MainGame {
 				break;
 				
 				case assaultRifle:
-					bullets.add(new AssaultRifle(p.x, p.y, x, y, p.vx, p.vy));
+					bullets.add(new AssaultRifle(p.x, p.y, x, y, Player.vx, Player.vy));
 					
 				break;
 				
 				case sniperRifle: 
-					bullets.add(new SniperRifle(p.x, p.y, x, y, p.vx, p.vy));
+					bullets.add(new SniperRifle(p.x, p.y, x, y, Player.vx, Player.vy));
 				break;
 				
 				default: 
-					bullets.add(new Pistol(p.x, p.y, x, y, p.vx, p.vy));
+					bullets.add(new Pistol(p.x, p.y, x, y, Player.vx, Player.vy));
 				}
 				
 				magazine -= 1;
@@ -261,7 +262,7 @@ public class MainGame {
 			
 		}
 	}	
-	void Spawn() {
+	void spawn() {
 		//Enemy
 		if(time%triceratopsSpawnTime==0) {//every few seconds spawns an enemy
 			Triceratops n = new Triceratops();

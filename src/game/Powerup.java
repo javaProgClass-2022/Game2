@@ -40,9 +40,9 @@ public class Powerup extends Enemy {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				if (!intersection.isEmpty()) {
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
-						MainGame.p.health-=damage;
-						MainGame.p.iframe=true;
+					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
+						Player.health-=damage;
+						Player.iframe=true;
 						MainGame.entities.remove(this);
 					}
 					i = 100000;//exit the for loop

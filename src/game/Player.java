@@ -4,6 +4,7 @@ import java.awt.Color;
 
 public class Player extends Entity {
 
+	private static final long serialVersionUID = 1L;
 	static int health = 100;
 	static double speed = 4.24264;
 	static int vx = 0;

@@ -2,6 +2,8 @@ package game;
 
 public class AssaultRifle extends Bullet {
 
+	private static final long serialVersionUID = 1L;
+
 	AssaultRifle(int startX, int startY, int targetX, int targetY, int initX, int initY) {
 		super(startX, startY, targetX, targetY, initX, initY);
 		
