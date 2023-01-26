@@ -1,24 +1,30 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 public class Entity extends Rectangle{
 
 	int damage;//damage on touch
-	int aspeed;//autospeed. For automatic movement
-
+	double aspeed;//autospeed. For automatic movement
+	Color color;
 	int health;
+	static int h;
 	boolean collide(){//goes through entities and checks if anything intersects with this
 		boolean c =false;
 		for(int i = 0;i<MainGame.entities.size();i++) {
 			if(MainGame.entities.get(i)!=this) {
 				Rectangle intersection = this.intersection(MainGame.entities.get(i));
 				//intersection is empty if doesn't intersect. Other values irrelevant.
-				if (!intersection.isEmpty()) {
+				if(y<0||y>MainGame.PFH||x<0||x>MainGame.PFW){
 					c = true;
-					if(MainGame.entities.get(i)==MainGame.p&&!MainGame.p.iframe) {
+					break;
+				}
+				else if (!intersection.isEmpty()) {
+					c = true;
+					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
 
-						MainGame.p.iframe = true;
+						Player.iframe = true;
 						Player.health-=damage;
 					}
 					break;
@@ -32,14 +38,15 @@ public class Entity extends Rectangle{
 		int y1=y;
 		double deltaX = x-m.x;
 		double deltaY = y-m.y;
-		int h;
 		int v;
 		
 		//detect which general direction movement is in
 		if(x>m.x)h=-1;
 		else h=1;
+		
 		if(y>m.y)v=-1;
 		else v=1;
+		
 		
 		double angle = Math.abs(Math.atan(deltaY/deltaX));
 
@@ -55,8 +62,9 @@ public class Entity extends Rectangle{
 		//if vertical. NaN != NaN and angle is NaN if line is vertical
 		if(angle!=angle) {
 			x=x1;
-			y=h*aspeed;
+			y=(int) (h*aspeed);
 		}
+		
 		//various failed attempts at preventing enemies from getting stuck on walls
 		/*if(x==x1&&y==y1) {
 			//move full speed perpendicular to target

@@ -20,31 +20,21 @@ public class BetterKeyListener implements KeyListener{
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				left=true;
 				
-				if (Player.vx != -Player.speed) {
-					Player.vx -= Player.speed;
-				} 
+				Player.vx = -(int)Player.speed;
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=true;
-				if (Player.vx != Player.speed) {
-					Player.vx += Player.speed;
-				} 
+				Player.vx = (int)Player.speed;
 				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				up=true;
-				
-				if (Player.vy != -Player.speed) {
-					Player.vy -= Player.speed;
-				}
+				Player.vy = -(int)Player.speed;
 			}
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				down=true;
-				
-				if (Player.vy != Player.speed) {
-					Player.vy += Player.speed;
-				} 
+				Player.vy = (int)Player.speed;
 			}
 			
 		}
@@ -54,7 +44,6 @@ public class BetterKeyListener implements KeyListener{
 				left=false;
 				
 				Player.vx = 0;
-				
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				right=false;
