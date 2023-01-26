@@ -11,6 +11,7 @@ public class Player extends Entity {
 	static int vy = 0;
 	static boolean iframe = false;
 	static GunType gun;
+	static int ammo;
 	
 	Player(){
 		height=5;
@@ -18,10 +19,10 @@ public class Player extends Entity {
 		x = 1200; 
 		y = 1350;	
 		color = Color.black;
-		gun = GunType.assaultRifle;
+		gun = GunType.pistol;
+		ammo = 35;
 	}
 		
-	
 	
 	void move(){//does movement when it gets arrow keys. If rather than else if allows diagonals
 		int y1 = y;

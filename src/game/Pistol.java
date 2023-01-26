@@ -17,6 +17,8 @@ public class Pistol extends Bullet {
 		speed = 5;
 		
 		range = 300;
+		
+		magazine = 35;
 	}
 	
 	

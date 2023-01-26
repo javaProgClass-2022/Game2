@@ -3,6 +3,11 @@ package game;
 import java.awt.Rectangle;
 
 public class Powerup extends Enemy {
+	
+	Powerup() {
+		x = (int) (MainGame.PANW*Math.random());
+		y = (int) (MainGame.PANH*Math.random());
+	}
 
 	//prevent actual movement
 	@Override

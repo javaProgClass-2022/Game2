@@ -48,7 +48,6 @@ public class MainGame {
 	final static Rectangle r = new Rectangle(0,0,PFW,PFH);
 	
 	// quantity of bullets in a magazine
-	static int magazine = 99999999;
 	
 	static int level = 1;
 	
@@ -61,8 +60,9 @@ public class MainGame {
 	int velociraptorSpawnTime = 500;
 	int tRexSpawnTime = 800;
 	int pterodactylSpawnTime = 600;
-	int hpSpawnTime = 5000;
-	int gunSpawnTime = 5000;
+	int hpSpawnTime = 200;
+	int gunSpawnTime = 200;
+	int ammoSpawnTime = 200;
 	int time;
 	int levelDelay=10000; //how long between levels
 	
@@ -111,7 +111,6 @@ public class MainGame {
 		DrawingPanel() {
 			this.setBackground(Color.LIGHT_GRAY);
 			this.setPreferredSize(new Dimension(PANW,PANH));  //remember that the JPanel size is more accurate than JFrame.
-			this.addMouseListener(new BulletCoordinates());
 			this.addKeyListener(bKeyl);
 			this.setFocusable(true);//required to make keyListener work
 			this.addMouseListener(new BulletCoordinates());
@@ -207,7 +206,7 @@ public class MainGame {
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
 
-			if (magazine != 0) {
+			if (Player.ammo > 0) {
 				int vx = e.getX();
 				int vy = e.getY();
 			
@@ -238,7 +237,9 @@ public class MainGame {
 					bullets.add(new Pistol(p.x, p.y, x, y, Player.vx, Player.vy));
 				}
 				
-				magazine -= 1;
+				Player.ammo -= 1;
+				System.out.println(Player.gun);
+				System.out.println(Player.ammo);
 			}
 
 		}
@@ -305,6 +306,13 @@ public class MainGame {
 		}	
 		if(time%gunSpawnTime==0) {
 			Gun n = new Gun();
+			if(!n.collide()) {
+				entities.add(n);
+			}
+		}
+		
+		if(time%ammoSpawnTime==0) {
+			Ammo n = new Ammo();
 			if(!n.collide()) {
 				entities.add(n);
 			}

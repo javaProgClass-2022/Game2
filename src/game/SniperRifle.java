@@ -16,6 +16,8 @@ public class SniperRifle extends Bullet {
 		speed = 8;
 		
 		range = 800;
+		
+		magazine = 15;
 	}
 
 	boolean collide(){//goes through entities and checks if anything intersects with this

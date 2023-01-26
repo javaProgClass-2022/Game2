@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Gun extends Powerup {
-	Gun(){
+public class Ammo extends Powerup {
+	
+	Ammo(){
 		super();
+		
+	
+				
 		width = 20;
 		height = 20;
 		aspeed=10;
 		damage = 0;
-		color = Color.yellow;
+		color = Color.green;
 	}
 	
 	@Override
@@ -24,20 +28,8 @@ public class Gun extends Powerup {
 				if (!intersection.isEmpty()) {
 					c = true;
 					if(MainGame.entities.get(i)==MainGame.p&&!Player.iframe) {
-
 						
-						GunType[] values = GunType.values();
-			            int length = values.length;
-			            int randIndex = new Random().nextInt(length);
-			            
-			            while(values[randIndex] == Player.gun) {
-			            	randIndex = new Random().nextInt(length);
-			            }
-			            
-						Player.gun = values[randIndex];
-						
-						Ammo.refillAmmo();
-						
+						refillAmmo();
 						
 						Player.iframe = true;
 						MainGame.entities.remove(this);
@@ -47,5 +39,25 @@ public class Gun extends Powerup {
 			}
 		}
 		return c;
+	}
+	
+	static void refillAmmo() {
+		switch(Player.gun) {
+		case shotgun: 
+			// I gave up (the spread is broken
+			Player.ammo = Shotgun.magazine;
+		break;
+		
+		case assaultRifle:
+			Player.ammo = AssaultRifle.magazine;
+		break;
+		
+		case sniperRifle: 
+			Player.ammo = SniperRifle.magazine;
+		break;
+		
+		default: 
+			Player.ammo = Pistol.magazine;
+		}
 	}
 }

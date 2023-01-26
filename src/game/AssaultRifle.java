@@ -15,6 +15,8 @@ public class AssaultRifle extends Bullet {
 		speed = 7;
 		
 		range = 500;
+		
+		magazine = 25;
 	}
 
 }
